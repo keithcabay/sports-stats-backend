@@ -65,19 +65,6 @@ public class TeamsController {
         return new ResponseEntity<>(convertedTeamFromEntity, HttpStatus.OK);
     }
 
-    @PatchMapping(path = "/teams/{shortName}")
-    public ResponseEntity<TeamsDto> partialUpdateTeam(@PathVariable("shortName") String shortName, @RequestBody TeamsDto teamsDto){
-        if(!teamsService.existById(shortName)){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-
-        TeamsEntity convertedTeamFromDto = teamsMapper.mapFrom(teamsDto);
-        TeamsEntity returnedTeamEntity = teamsService.partialUpdate(shortName, convertedTeamFromDto);
-        TeamsDto convertedTeamFromEntity = teamsMapper.mapTo(returnedTeamEntity);
-
-        return new ResponseEntity<>(convertedTeamFromEntity, HttpStatus.OK);
-    }
-
     @DeleteMapping(path = "/teams/{shortName}")
     public ResponseEntity deleteTeam(@PathVariable("shortName") String shortName){
         teamsService.delete(shortName);
