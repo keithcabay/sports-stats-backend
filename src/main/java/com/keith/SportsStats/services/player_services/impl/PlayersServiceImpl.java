@@ -30,7 +30,12 @@ public class PlayersServiceImpl implements PlayersService {
     public PlayersEntity save(PlayersEntity playersEntity) {
         if(playersEntity.getTeam() != null){
             Optional<TeamsEntity> team = teamsRepository.findById(playersEntity.getTeam().getShortName());
-            playersEntity.setTeam(team.get());
+
+            if (team.isPresent()) {
+                playersEntity.setTeam(team.get());
+            } else {
+                playersEntity.setTeam(null);
+            }
         }
         return playersRepository.save(playersEntity);
     }
@@ -61,18 +66,14 @@ public class PlayersServiceImpl implements PlayersService {
     @Override
     public PlayersEntity partialUpdate(Long id, PlayersEntity playersEntity) {
         playersEntity.setPlayer_id(id);
-        Optional<TeamsEntity> team;
-
-        if(shortName != playersEntity.getTeam().getShortName()){
-            team = teamsRepository.findById(shortName);
-        }
 
         return playersRepository.findById(id).map(existingPlayer -> {
             Optional.ofNullable(playersEntity.getFirst_name()).ifPresent(existingPlayer::setFirst_name);
             Optional.ofNullable(playersEntity.getLast_name()).ifPresent(existingPlayer::setLast_name);
 
-            if(playersEntity.getTeam() != null && existingPlayer.getTeam() != playersEntity.getTeam()){
-                existingPlayer.setTeam(team.get());
+            if(existingPlayer.getTeam() != playersEntity.getTeam() && playersEntity.getTeam() != null){
+                Optional<TeamsEntity> team = teamsRepository.findById(playersEntity.getTeam().getShortName());
+                team.ifPresent(existingPlayer::setTeam);
             }
 
             return playersRepository.save(existingPlayer);
