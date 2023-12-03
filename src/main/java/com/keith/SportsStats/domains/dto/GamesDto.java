@@ -1,13 +1,12 @@
 package com.keith.SportsStats.domains.dto;
 
-import com.keith.SportsStats.domains.entity.TeamsEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.sql.Time;
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Data
 @AllArgsConstructor
@@ -18,7 +17,7 @@ public class GamesDto {
 
     LocalDate date;
 
-    Time time;
+    LocalTime time;
 
     TeamsDto homeTeam;
 

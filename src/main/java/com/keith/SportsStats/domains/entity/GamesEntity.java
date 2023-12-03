@@ -6,8 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.sql.Time;
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Data
 @AllArgsConstructor
@@ -24,7 +24,7 @@ public class GamesEntity {
     @Column(columnDefinition = "DATE")
     LocalDate date;
 
-    Time time;
+    LocalTime time;
 
     @ManyToOne
     @JoinColumn(name = "home_team_short_name", referencedColumnName = "shortName")
