@@ -16,7 +16,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import static jdk.dynalink.linker.support.Guards.isNull;
 
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
@@ -99,7 +98,7 @@ public class TeamsControllerIntegrationTests {
     @Test
     public void testThatGetTeamByNameReturnsHttp200SuccessfulIfFound() throws Exception {
         TeamsEntity team1 = TestData.createKnicksTeam();
-        TeamsEntity returnedTeam1 = teamsService.save(team1);
+        teamsService.save(team1);
 
         mockMvc.perform(
                 MockMvcRequestBuilders.get("/teams/" + team1.getShortName())
@@ -111,7 +110,7 @@ public class TeamsControllerIntegrationTests {
     @Test
     public void testThatGetTeamByNameReturnsHttp200SuccessfulIfNotFound() throws Exception {
         TeamsEntity team1 = TestData.createKnicksTeam();
-        TeamsEntity returnedTeam1 = teamsService.save(team1);
+        teamsService.save(team1);
 
         mockMvc.perform(
                 MockMvcRequestBuilders.get("/teams/" + 9999)

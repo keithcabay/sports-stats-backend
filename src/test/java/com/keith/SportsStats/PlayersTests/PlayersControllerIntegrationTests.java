@@ -6,7 +6,6 @@ import com.keith.SportsStats.domains.entity.PlayersEntity;
 import com.keith.SportsStats.domains.entity.TeamsEntity;
 import com.keith.SportsStats.services.player_services.PlayersService;
 import com.keith.SportsStats.services.team_services.TeamsService;
-import org.glassfish.jaxb.core.v2.model.core.Ref;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -212,7 +211,7 @@ public class PlayersControllerIntegrationTests {
         PlayersEntity player1 = TestData.createPlayerAonKnicks();
         player1.setPlayer_id(10L);
 
-        PlayersEntity returnedPlayer1 = playersService.save(player1);
+        playersService.save(player1);
 
         mockMvc.perform(
                 MockMvcRequestBuilders.get("/players/" + player1.getPlayer_id())
