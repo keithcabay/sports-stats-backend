@@ -22,6 +22,4 @@ public class PlayersDto {
     String last_name;
 
     TeamsDto team;
-
-    List<PlayerStatsByGameDto> statsByGame;
 }

@@ -27,7 +27,4 @@ public class PlayersEntity {
     @ManyToOne
     @JoinColumn(name = "player_team_short_name", referencedColumnName = "shortName")
     TeamsEntity team;
-
-    @OneToMany(mappedBy = "player")
-    List<PlayerStatsByGameEntity> allStats;
 }
