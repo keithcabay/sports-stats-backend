@@ -17,7 +17,5 @@ public interface TeamsService {
 
     boolean existById(String shortName);
 
-    TeamsEntity partialUpdate(String shortName, TeamsEntity teamsEntity);
-
     void delete(String shortName);
 }
