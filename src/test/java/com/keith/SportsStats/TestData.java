@@ -21,6 +21,7 @@ public class TestData {
     }
 
     public static PlayersEntity createPlayerAonKnicks(){
+        //named on knicks for easier understanding but still need to persist a created knicks team, then setTeam
         return PlayersEntity.builder()
                 .player_id(1L)
                 .first_name("Jalen")
@@ -30,6 +31,7 @@ public class TestData {
     }
 
     public static PlayersEntity createPlayerBonBucks(){
+        //named on bucks for easier understanding but still need to persist a created bucks team, then setTeam
         return PlayersEntity.builder()
                 .player_id(2L)
                 .first_name("Giannis")
@@ -54,7 +56,7 @@ public class TestData {
                 .last_name("Bryant")
                 .team(createKnicksTeam())
                 //note: team is never persisted to database so does not exist
-                // in database but does have a TeamsEntity object including shortName
+                // in database but does refer to TeamsEntity knicks object including shortName
                 .build();
     }
 }
