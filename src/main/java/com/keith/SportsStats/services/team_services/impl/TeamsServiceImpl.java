@@ -35,16 +35,6 @@ public class TeamsServiceImpl implements TeamsService {
     }
 
     @Override
-    public TeamsEntity partialUpdate(String shortName, TeamsEntity teamsEntity) {
-        teamsEntity.setShortName(shortName);
-
-        return teamsRepository.findById(shortName).map(foundTeam -> {
-            Optional.ofNullable(teamsEntity.getFullName()).ifPresent(foundTeam::setFullName);
-            return teamsRepository.save(foundTeam);
-        }).orElseThrow(() -> new RuntimeException("Team Does Not Exist"));
-    }
-
-    @Override
     public void delete(String shortName) {
         teamsRepository.deleteById(shortName);
     }
