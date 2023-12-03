@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Time;
 import java.time.LocalDate;
 
 @Data
@@ -23,6 +24,8 @@ public class GamesEntity {
     @Column(columnDefinition = "DATE")
     LocalDate date;
 
+    Time time;
+
     @ManyToOne
     @JoinColumn(name = "home_team_short_name", referencedColumnName = "shortName")
     TeamsEntity homeTeam;
@@ -30,4 +33,8 @@ public class GamesEntity {
     @ManyToOne
     @JoinColumn(name = "away_team_short_name", referencedColumnName = "shortName")
     TeamsEntity awayTeam;
+
+    int homeTeamScore;
+
+    int awayTeamScore;
 }
