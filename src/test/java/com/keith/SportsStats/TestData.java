@@ -1,7 +1,11 @@
 package com.keith.SportsStats;
 
+import com.keith.SportsStats.domains.entity.GamesEntity;
 import com.keith.SportsStats.domains.entity.PlayersEntity;
 import com.keith.SportsStats.domains.entity.TeamsEntity;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 public class TestData {
     private TestData(){}
@@ -57,6 +61,30 @@ public class TestData {
                 .team(createKnicksTeam())
                 //note: team is never persisted to database so does not exist
                 // in database but does refer to TeamsEntity knicks object including shortName
+                .build();
+    }
+
+    public static GamesEntity createGameNov25(){
+        return GamesEntity.builder()
+                .game_id(1L)
+                .date(LocalDate.of(2023, 11, 25))
+                .time(LocalTime.of(7, 30))
+                .homeTeamScore(0)
+                .awayTeamScore(0)
+                .awayTeam(null)
+                .homeTeam(null)
+                .build();
+    }
+
+    public static GamesEntity createGameDec15(){
+        return GamesEntity.builder()
+                .game_id(2L)
+                .date(LocalDate.of(2023, 12, 15))
+                .time(LocalTime.of(7, 30))
+                .homeTeamScore(0)
+                .awayTeamScore(0)
+                .awayTeam(null)
+                .homeTeam(null)
                 .build();
     }
 }
