@@ -1,15 +1,12 @@
 package com.keith.SportsStats.services.player_services.impl;
 
-import com.keith.SportsStats.domains.dto.PlayersDto;
 import com.keith.SportsStats.domains.entity.PlayersEntity;
 import com.keith.SportsStats.domains.entity.TeamsEntity;
 import com.keith.SportsStats.repositories.PlayersRepository;
 import com.keith.SportsStats.repositories.TeamsRepository;
 import com.keith.SportsStats.services.player_services.PlayersService;
-import org.apache.tomcat.util.http.fileupload.util.Streams;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
