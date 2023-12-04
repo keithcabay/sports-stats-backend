@@ -5,13 +5,8 @@ import com.keith.SportsStats.domains.dto.TeamsDto;
 import com.keith.SportsStats.domains.entity.PlayersEntity;
 import com.keith.SportsStats.domains.entity.TeamsEntity;
 import com.keith.SportsStats.mappers.Mapper;
-import com.keith.SportsStats.mappers.impl.PlayerMapperImpl;
-import com.keith.SportsStats.mappers.impl.TeamMapperImpl;
-import com.keith.SportsStats.repositories.TeamsRepository;
 import com.keith.SportsStats.services.player_services.PlayersService;
 import com.keith.SportsStats.services.player_services.impl.PlayersServiceImpl;
-import com.keith.SportsStats.services.team_services.TeamsService;
-import org.aspectj.weaver.patterns.HasMemberTypePatternForPerThisMatching;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 @RestController
 public class PlayersController {
@@ -66,7 +60,6 @@ public class PlayersController {
 
     @GetMapping(path = "/players/{player_id}")
     public ResponseEntity<PlayersDto> getPlayerByTeam(@PathVariable("player_id") Long id){
-
 
         Optional<PlayersEntity> returnedPlayerEntity = playersService.findByid(id);
         return returnedPlayerEntity.map(playersEntity -> {
