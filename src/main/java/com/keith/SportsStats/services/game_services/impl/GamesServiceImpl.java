@@ -40,4 +40,14 @@ public class GamesServiceImpl implements GamesService {
         }
         return false;
     }
+
+    @Override
+    public boolean existById(Long id) {
+        return gamesRepository.existsById(id);
+    }
+
+    @Override
+    public Optional<GamesEntity> findById(Long id) {
+        return gamesRepository.findById(id);
+    }
 }
