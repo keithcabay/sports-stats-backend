@@ -6,10 +6,10 @@ import com.keith.SportsStats.mappers.Mapper;
 import com.keith.SportsStats.services.game_services.GamesService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class GamesController {
@@ -36,5 +36,18 @@ public class GamesController {
         GamesDto finalSavedDto = gameMapper.mapTo(returnedSavedEntity);
 
         return new ResponseEntity<>(finalSavedDto, HttpStatus.CREATED);
+    }
+
+    @GetMapping(path = "/games/{id}")
+    public ResponseEntity<GamesDto> getGameById(@PathVariable("id") Long id){
+
+        Optional<GamesEntity> foundGameEntity = gamesService.findById(id);
+
+        return foundGameEntity.map(game -> {
+            GamesDto gamesDto = gameMapper.mapTo(game);
+            return new ResponseEntity<>(gamesDto, HttpStatus.OK);
+        }).orElse(
+                new ResponseEntity<>(HttpStatus.NOT_FOUND)
+        );
     }
 }
