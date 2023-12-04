@@ -110,4 +110,54 @@ public class GamesControllerIntegrationTests {
                 MockMvcResultMatchers.jsonPath("$.homeTeamScore").value(game1.getHomeTeamScore())
         );
     }
+
+    @Test
+    public void testThatFindGameByIdSuccessfullyReturnsHttpStatus200() throws Exception{
+        GamesEntity game1 = TestData.createGameNov25();
+
+        TeamsEntity team1 = TestData.createBucksTeam();
+        TeamsEntity returnedHomeTeam = teamsService.save(team1);
+        TeamsEntity team2 = TestData.createKnicksTeam();
+        TeamsEntity returnedAwayTeam = teamsService.save(team2);
+
+        gamesService.save(game1, returnedHomeTeam.getShortName(), returnedAwayTeam.getShortName());
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.get("/games/" + game1.getGame_id())
+        ).andExpect(
+                MockMvcResultMatchers.status().isOk()
+        );
+    }
+
+    @Test
+    public void testThatFindGameByIdThatDoesNotExistSuccessfullyReturnsHttp204NotFound() throws Exception{
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.get("/games/" + 999)
+        ).andExpect(
+                MockMvcResultMatchers.status().isNotFound()
+        );
+    }
+
+    @Test
+    public void testThatFindGameByIdReturnsCorrectGame() throws Exception{
+        GamesEntity game1 = TestData.createGameNov25();
+
+        TeamsEntity team1 = TestData.createBucksTeam();
+        TeamsEntity returnedHomeTeam = teamsService.save(team1);
+        TeamsEntity team2 = TestData.createKnicksTeam();
+        TeamsEntity returnedAwayTeam = teamsService.save(team2);
+
+        gamesService.save(game1, returnedHomeTeam.getShortName(), returnedAwayTeam.getShortName());
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.get("/games/" + game1.getGame_id())
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$.homeTeam").value(returnedHomeTeam)
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$.awayTeam").value(returnedAwayTeam)
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$.game_id").value(game1.getGame_id())
+        );
+    }
 }
