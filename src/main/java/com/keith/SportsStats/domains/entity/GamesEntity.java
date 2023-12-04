@@ -24,6 +24,7 @@ public class GamesEntity {
     @Column(columnDefinition = "DATE")
     LocalDate date;
 
+    @Column(columnDefinition = "TIME")
     LocalTime time;
 
     @ManyToOne
