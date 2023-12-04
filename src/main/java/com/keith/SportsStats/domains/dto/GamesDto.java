@@ -13,7 +13,7 @@ import java.time.LocalTime;
 @NoArgsConstructor
 @Builder
 public class GamesDto {
-    Long id;
+    Long game_id;
 
     LocalDate date;
 
