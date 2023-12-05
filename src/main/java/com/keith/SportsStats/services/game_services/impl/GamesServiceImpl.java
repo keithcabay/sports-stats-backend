@@ -50,4 +50,18 @@ public class GamesServiceImpl implements GamesService {
     public Optional<GamesEntity> findById(Long id) {
         return gamesRepository.findById(id);
     }
+
+    @Override
+    public GamesEntity partialUpdate(Long id, GamesEntity gamesEntity) {
+        gamesEntity.setGame_id(id);
+
+        return gamesRepository.findById(id).map(existingGame -> {
+            Optional.ofNullable(gamesEntity.getTime()).ifPresent(existingGame::setTime);
+            Optional.ofNullable(gamesEntity.getDate()).ifPresent(existingGame::setDate);
+            Optional.of(gamesEntity.getHomeTeamScore()).ifPresent(existingGame::setHomeTeamScore);
+            Optional.of(gamesEntity.getAwayTeamScore()).ifPresent(existingGame::setAwayTeamScore);
+
+            return gamesRepository.save(existingGame);
+        }).orElseThrow(() -> new RuntimeException("Not found"));
+    }
 }

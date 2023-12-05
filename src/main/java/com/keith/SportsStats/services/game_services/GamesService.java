@@ -15,4 +15,6 @@ public interface GamesService {
     boolean existById(Long id);
 
     Optional<GamesEntity> findById(Long id);
+
+    GamesEntity partialUpdate(Long id, GamesEntity gamesEntity);
 }
