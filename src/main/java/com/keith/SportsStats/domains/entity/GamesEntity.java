@@ -27,11 +27,11 @@ public class GamesEntity {
     @Column(columnDefinition = "TIME")
     LocalTime time;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "home_team_short_name", referencedColumnName = "shortName")
     TeamsEntity homeTeam;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "away_team_short_name", referencedColumnName = "shortName")
     TeamsEntity awayTeam;
 

@@ -16,12 +16,12 @@ import lombok.NoArgsConstructor;
 public class PlayerStatsByGameEntity {
 
     @Id
-    @ManyToOne()
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "game_id")
     GamesEntity game;
 
     @Id
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "player_id")
     PlayersEntity player;
 

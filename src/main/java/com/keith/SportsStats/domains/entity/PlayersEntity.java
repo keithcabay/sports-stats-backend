@@ -23,7 +23,7 @@ public class PlayersEntity {
 
     String last_name;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "player_team_short_name", referencedColumnName = "shortName")
     TeamsEntity team;
 }
