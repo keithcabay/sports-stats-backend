@@ -9,6 +9,7 @@ import com.keith.SportsStats.services.player_services.PlayersService;
 import com.keith.SportsStats.services.player_stats_services.PlayerStatsService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -44,8 +45,14 @@ public class PlayerStatsServiceImpl implements PlayerStatsService {
         if(player.isPresent() && game.isPresent()){
             playerStatsEntity.setPlayer(player.get());
             playerStatsEntity.setGame(game.get());
+            return playerStatsRepository.save(playerStatsEntity);
         }
 
-        return playerStatsRepository.save(playerStatsEntity);
+        return null;
+    }
+
+    @Override
+    public List<PlayerStatsByGameEntity> getAllPlayerStats(Long playerId) {
+        return playerStatsRepository.allPlayerStats(playerId);
     }
 }
