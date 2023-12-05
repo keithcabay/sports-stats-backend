@@ -239,4 +239,53 @@ public class GamesControllerIntegrationTests {
                 MockMvcResultMatchers.jsonPath("$.date").value(game1.getDate().toString())
         );
     }
+
+    @Test
+    public void testThatDeleteGameSuccessfullyReturnsHttp204NoContent() throws Exception{
+        GamesEntity game1 = TestData.createGameNov25();
+
+        TeamsEntity team1 = TestData.createBucksTeam();
+        TeamsEntity returnedHomeTeam = teamsService.save(team1);
+        TeamsEntity team2 = TestData.createKnicksTeam();
+        TeamsEntity returnedAwayTeam = teamsService.save(team2);
+
+        GamesEntity returnedGame =  gamesService.save(game1, returnedHomeTeam.getShortName(), returnedAwayTeam.getShortName());
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.delete("/games/" + returnedGame.getGame_id())
+        ).andExpect(
+                MockMvcResultMatchers.status().isNoContent()
+        );
+    }
+
+
+    @Test
+    public void testThatDeleteGameSuccessfullyDeletesGame() throws Exception{
+        GamesEntity game1 = TestData.createGameNov25();
+
+        TeamsEntity team1 = TestData.createBucksTeam();
+        TeamsEntity returnedHomeTeam = teamsService.save(team1);
+        TeamsEntity team2 = TestData.createKnicksTeam();
+        TeamsEntity returnedAwayTeam = teamsService.save(team2);
+
+        GamesEntity returnedGame =  gamesService.save(game1, returnedHomeTeam.getShortName(), returnedAwayTeam.getShortName());
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.delete("/games/" + returnedGame.getGame_id())
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$.game_id").doesNotExist()
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$.homeTeam").doesNotExist()
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$.awayTeam").doesNotExist()
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$.homeTeamScore").doesNotExist()
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$.awayTeamScore").doesNotExist()
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$.date").doesNotExist()
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$.time").doesNotExist()
+        );
+    }
 }
