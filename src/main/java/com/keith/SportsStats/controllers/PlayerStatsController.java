@@ -6,10 +6,10 @@ import com.keith.SportsStats.mappers.impl.PlayerStatsMapper;
 import com.keith.SportsStats.services.player_stats_services.PlayerStatsService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 public class PlayerStatsController {
@@ -38,5 +38,14 @@ public class PlayerStatsController {
         PlayerStatsByGameDto returnedPlayerStatsDto = playerStatsMapper.mapTo(returnedPlayerStatsEntity);
 
         return new ResponseEntity<>(returnedPlayerStatsDto, HttpStatus.CREATED);
+    }
+
+    @GetMapping(path = "/player-stats/{player_id}")
+    public List<PlayerStatsByGameDto> getAllStatsByPlayerId(@PathVariable("player_id") Long player_id){
+        List<PlayerStatsByGameEntity> allPlayerStats = playerStatsService.getAllPlayerStats(player_id);
+
+        return allPlayerStats.stream()
+                .map(stat -> playerStatsMapper.mapTo(stat)
+                ).collect(Collectors.toList());
     }
 }
