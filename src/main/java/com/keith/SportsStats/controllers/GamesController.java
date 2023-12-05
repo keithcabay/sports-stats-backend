@@ -50,4 +50,19 @@ public class GamesController {
                 new ResponseEntity<>(HttpStatus.NOT_FOUND)
         );
     }
+
+
+    //patch used in the event of a postponed game or to update the scores
+    @PatchMapping(path = "/games/{id}")
+    public ResponseEntity<GamesDto> partialUpdateGame(@PathVariable("id") Long id, @RequestBody GamesDto gamesDto){
+        if(!gamesService.existById(id)){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        GamesEntity convertedEntityFromDto = gameMapper.mapFrom(gamesDto);
+        GamesEntity returnedGame = gamesService.partialUpdate(id, convertedEntityFromDto);
+        GamesDto returnedGameDto = gameMapper.mapTo(returnedGame);
+
+        return new ResponseEntity<>(returnedGameDto, HttpStatus.OK);
+    }
 }
