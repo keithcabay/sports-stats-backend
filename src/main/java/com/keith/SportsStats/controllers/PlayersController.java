@@ -18,10 +18,8 @@ import java.util.stream.Collectors;
 @RestController
 public class PlayersController {
 
-
     private PlayersService playersService;
     private Mapper<PlayersEntity, PlayersDto> playersMapper;
-
 
     public PlayersController(PlayersService playersService, Mapper<PlayersEntity, PlayersDto> playersMapper, Mapper<TeamsEntity, TeamsDto> teamsMapper, PlayersServiceImpl playersServiceImpl){
         this.playersService = playersService;

@@ -12,6 +12,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Builder
 public class PlayerStatsId implements Serializable {
-    private PlayersEntity playersEntity;
-    private GamesEntity gamesEntity;
+    private PlayersEntity player;
+
+    private GamesEntity game;
 }
