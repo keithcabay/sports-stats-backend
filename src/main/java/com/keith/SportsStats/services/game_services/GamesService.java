@@ -17,4 +17,6 @@ public interface GamesService {
     Optional<GamesEntity> findById(Long id);
 
     GamesEntity partialUpdate(Long id, GamesEntity gamesEntity);
+
+    void deleteById(Long id);
 }
