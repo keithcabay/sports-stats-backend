@@ -1,6 +1,7 @@
 package com.keith.SportsStats;
 
 import com.keith.SportsStats.domains.entity.GamesEntity;
+import com.keith.SportsStats.domains.entity.PlayerStatsByGameEntity;
 import com.keith.SportsStats.domains.entity.PlayersEntity;
 import com.keith.SportsStats.domains.entity.TeamsEntity;
 
@@ -85,6 +86,32 @@ public class TestData {
                 .awayTeamScore(0)
                 .awayTeam(null)
                 .homeTeam(null)
+                .build();
+    }
+
+    public static PlayerStatsByGameEntity playerStatsOnNov25(){
+        return PlayerStatsByGameEntity.builder()
+                .game(null)
+                .player(null)
+                .assists(6)
+                .points(20)
+                .offensive_rebounds(4)
+                .defensive_rebounds(5)
+                .minutes_played(35)
+                .build();
+    }
+
+    public static PlayerStatsByGameEntity playerStatsOnDec15(){
+        return PlayerStatsByGameEntity.builder()
+                .game(null)
+                .player(null)
+                .assists(3)
+                .points(26)
+                .offensive_rebounds(4)
+                .defensive_rebounds(5)
+                .minutes_played(35)
+                .fouls(2)
+                .blocks(1)
                 .build();
     }
 }
