@@ -132,4 +132,82 @@ public class PlayerStatsIntegrationTests {
                 MockMvcResultMatchers.jsonPath("$.minutes_played").value(playerStat.getMinutes_played())
         );
     }
+
+    @Test
+    public void testThatGetAllPlayerStatsSuccessfullyReturnsHttp200() throws Exception{
+        //creation and persistence of player
+        PlayersEntity player = TestData.createPlayerAonKnicks();
+        PlayersEntity returnedPlayer = playersService.save(player);
+
+        //creation and persistence of both teams
+        TeamsEntity homeTeam = TestData.createKnicksTeam();
+        TeamsEntity returnedHomeTeam = teamsService.save(homeTeam);
+        TeamsEntity awayTeam = TestData.createBucksTeam();
+        TeamsEntity returnedAwayTeam = teamsService.save(awayTeam);
+
+        //creation and persistence of both games
+        GamesEntity game = TestData.createGameNov25();
+        GamesEntity returnedGame = gamesService.save(game, returnedHomeTeam.getShortName(), returnedAwayTeam.getShortName());
+        GamesEntity game2 = TestData.createGameDec15();
+        GamesEntity returnedGame2 = gamesService.save(game2, returnedHomeTeam.getShortName(), returnedAwayTeam.getShortName());
+
+        //creation and persistence of both player stats
+        PlayerStatsByGameEntity playerStatNov25 = TestData.playerStatsOnNov25();
+        playerStatNov25.setGame(returnedGame);
+        playerStatNov25.setPlayer(returnedPlayer);
+
+        PlayerStatsByGameEntity playerStatDec15 = TestData.playerStatsOnDec15();
+        playerStatDec15.setGame(returnedGame2);
+        playerStatDec15.setPlayer(returnedPlayer);
+        playerStatsService.save(playerStatNov25, returnedPlayer.getPlayer_id(), returnedGame.getGame_id());
+        playerStatsService.save(playerStatDec15, returnedPlayer.getPlayer_id(), returnedGame2.getGame_id());
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.get("/player-stats/" + returnedPlayer.getPlayer_id())
+        ).andExpect(
+                MockMvcResultMatchers.status().isOk()
+        );
+    }
+
+    @Test
+    public void testThatGetAllPlayerStatsSuccessfullyReturnsListOfPlayerStats() throws Exception{
+        //creation and persistence of player
+        PlayersEntity player = TestData.createPlayerAonKnicks();
+        PlayersEntity returnedPlayer = playersService.save(player);
+
+        //creation and persistence of both teams
+        TeamsEntity homeTeam = TestData.createKnicksTeam();
+        TeamsEntity returnedHomeTeam = teamsService.save(homeTeam);
+        TeamsEntity awayTeam = TestData.createBucksTeam();
+        TeamsEntity returnedAwayTeam = teamsService.save(awayTeam);
+
+        //creation and persistence of both games
+        GamesEntity game = TestData.createGameNov25();
+        GamesEntity returnedGame = gamesService.save(game, returnedHomeTeam.getShortName(), returnedAwayTeam.getShortName());
+        GamesEntity game2 = TestData.createGameDec15();
+        GamesEntity returnedGame2 = gamesService.save(game2, returnedHomeTeam.getShortName(), returnedAwayTeam.getShortName());
+
+        //creation and persistence of both player stats
+        PlayerStatsByGameEntity playerStatNov25 = TestData.playerStatsOnNov25();
+        playerStatNov25.setGame(returnedGame);
+        playerStatNov25.setPlayer(returnedPlayer);
+
+        PlayerStatsByGameEntity playerStatDec15 = TestData.playerStatsOnDec15();
+        playerStatDec15.setGame(returnedGame2);
+        playerStatDec15.setPlayer(returnedPlayer);
+        playerStatsService.save(playerStatNov25, returnedPlayer.getPlayer_id(), returnedGame.getGame_id());
+        playerStatsService.save(playerStatDec15, returnedPlayer.getPlayer_id(), returnedGame2.getGame_id());
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.get("/player-stats/" + returnedPlayer.getPlayer_id())
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("[0].game.game_id").value(returnedGame.getGame_id())
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("[0].player.player_id").value(returnedPlayer.getPlayer_id())
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("[1].game.game_id").value(returnedGame2.getGame_id())
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("[1].player.player_id").value(returnedPlayer.getPlayer_id())
+        );
+    }
 }
