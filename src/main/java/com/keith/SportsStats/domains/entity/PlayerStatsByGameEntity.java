@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @Entity
 @Table(name = "player_stats_by_game")
+@IdClass(PlayerStatsId.class)
 public class PlayerStatsByGameEntity {
 
     @Id
